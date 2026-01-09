@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Ale 💗</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: #FFE9F1;
+            color: #444;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2 {
+            color: #E05278;
+        }
+
+        /* -------------------- ANIMACIONES -------------------- */
+        section {
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* -------------------- BANNER PRINCIPAL -------------------- */
+        .banner {
+            width: 100%;
+            aspect-ratio: 14 / 3;
+            background-image: url("https://media.discordapp.net/attachments/1427070558834786456/1458952214826455101/Proyecto_nuevo_11.png?ex=696182a2&is=69603122&hm=4fd0bcce5585e50c885ec3983fab64fa465dd51589217b0da61cb04ecb460ac0&=&format=webp&quality=lossless&width=1232&height=264");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #FFE9F1;
+            position: relative;
+            transition: 0.4s;
+        }
+
+        .banner:hover {
+            filter: brightness(1.05);
+        }
+
+        /* Texto flotante del banner */
+        .banner-text {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2.1rem;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 768px) {
+            .banner {
+                height: 250px;
+            }
+            .banner-text {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* -------------------- NAVBAR -------------------- */
+        .navbar {
+            width: 100%;
+            background: #FFB7CC;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar a {
+            margin: 0 20px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #5A1E35;
+        }
+
+        /* -------------------- SECCIONES -------------------- */
+        section {
+            max-width: 900px;
+            margin: 60px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-top: 4px dotted #FFB7CC;
+        }
+
+        /* -------------------- CARTA -------------------- */
+        .carta-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #5e5e5e;
+            white-space: pre-line;
+        }
+
+        /* -------------------- NOTA DISNEY (oculta pero visible) -------------------- */
+        .disney-note {
+            font-size: 0.9rem;
+            color: #D8789B;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        /* -------------------- GALERÍA -------------------- */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .galeria img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .galeria img:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* -------------------- FOOTER -------------------- */
+        footer {
+            text-align: center;
+            color: #B76584;
+            margin: 50px 0 30px;
+            font-size: 0.85rem;
+        }
+
+        /* -------------------- EASTER EGG -------------------- */
+        .footer-secret {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #E08BAC;
+            opacity: 0.6;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- -------------------- BANNER -------------------- -->
+    <div class="banner">
+        <div class="banner-text">Para ti, Ale 💗</div>
+    </div>
+
+    <!-- -------------------- NAVBAR -------------------- -->
+    <div class="navbar">
+        <a href="#inicio">Página Principal</a>
+        <a href="#carta">La Carta</a>
+        <a href="#galeria">Galería de Fotos</a>
+    </div>
+
+    <!-- -------------------- SECCIÓN INICIO -------------------- -->
+    <section id="inicio">
+        <h1>Para ti, Ale 💗</h1>
+        <p style="font-size:1.2rem;">
+            Esta página es un detalle hecho con mucho cariño.  
+            Gracias por tomarte el tiempo de leer esto...
+        </p>
+    </section>
+
+    <!-- -------------------- SECCIÓN CARTA -------------------- -->
+    <section id="carta">
+        <h2>La Carta <span style="color:#E05278;">♡</span></h2>
+
+        <div class="carta-text">
+Para ti, Ale…
+
+Me dirijo a ti para expresarte mi perdón más sincero y también mi gratitud.
+Desde que me dijiste lo que realmente pensabas de mí ese día, te confieso que me dolió en lo profundo del corazón.
+He pasado estos días pensándolo una y otra vez, no como reproche, sino como una lección que necesitaba entender.
+
+No sé cuándo te entregue esta carta, pero desde ese momento en que abriste tu corazón conmigo con tanta sinceridad, tus palabras no han dejado de darme vueltas por la cabeza.
+Y por eso te escribo: porque lo que dijiste me marcó, me hizo reflexionar y me hizo querer ser mejor.
+
+No te lo digo para presionarte ni para incomodarte.
+Te lo digo porque es la verdad.
+Porque aunque respeto tus límites, convivir con este cariño que tengo por ti a veces pesa más de lo que dejo ver.
+
+Últimamente no me he sentido del todo bien desde que entendí ciertas cosas… porque al comprenderlas, me di cuenta de que mi cariño por ti pesa más de lo que yo mismo imaginaba.
+Es como un taladro emocional con baterías infinitas: no se apaga aunque yo quiera.
+Y no se apaga, no por obsesión, sino porque lo que sentí por ti fue honesto, fue real, y no nació para desaparecer de un día para otro.
+
+Quiero pedirte perdón, Ale.
+Por lo que dije estando confundido, por mis enojos mal manejados, por mis reacciones desde el miedo.
+Sé que mis palabras no siempre reflejaron lo que de verdad siento.
+Sé que te hice daño sin querer.
+Y eso sí me pesa.
+
+Pero también quiero que sepas otra cosa:
+estoy cambiando.
+Estoy creciendo y madurando emocionalmente porque me di cuenta de mis defectos, y no quiero esconderlos.
+
+Quiero mejorarlos porque tú me inspiraste a ser más paciente, más claro, más seguro y más estable.
+No por obligación ni por presión, sino porque cuando una persona vale la pena, uno sí se puede cambiar de verdad.
+
+Y aunque esto te suene curioso, hay algo que quiero dejártelo para meditar:
+hay ciertas estrellas que uno mira y no puede evitar pensar en alguien.
+No por lo que brillan, sino por lo que inspiran.
+Por la forma en que, aunque estén lejos o detrás de nubes, siguen ahí… constantes, firmes, iluminando de una manera tranquila que no todos entienden.
+Supongo que eso me pasó contigo.
+Y si lees con atención, vas a entender exactamente a qué me refiero.
+
+Yo espero —desde lo más honesto y profundo de mi corazón— que algún día me des la oportunidad de conocerme en persona de verdad.
+De mostrarte quién soy sin una pantalla.
+De demostrarte que sí puedo estar a tu nivel… a tus expectativas… a la vida que sueñas para ti.
+
+Sé que para ti es más cómodo pensar en la amistad…
+pero para mí es difícil, porque cuando uno siente lo que yo siento por ti, la amistad se queda corta.
+Y ambos sabemos lo que pasó por nuestra mente y por nuestro corazón.
+
+Aun así, lo respeto.
+Y te respeto a ti, Ale.
+
+No te escribo para cambiar tu decisión hoy.
+Te escribo para que sepas que aquí estoy: con cariño sincero, con paciencia, con crecimiento real…
+y con la esperanza tranquila de que algún día tengamos esa oportunidad que quedó pendiente.
+
+Gracias por lo que fuiste.
+Gracias por lo que eres.
+Gracias por lo que quizá podamos ser, si alguna vez te nace intentarlo en serio.
+
+Que Jehová, a quien conoces, te cuide siempre.
+Y aquí estoy, a la orden… sin presiones, pero con el corazón abierto.
+
+Att: Sebas
+        </div>
+
+        <!-- Nota estilo Disney -->
+        <div class="disney-note">
+            *"Hay luces que no se apagan, aunque estén lejos."*
+        </div>
+    </section>
+
+    <!-- -------------------- SECCIÓN GALERÍA -------------------- -->
+    <section id="galeria">
+        <h2>Fotos de los mejores momentos 📸</h2>
+        <div class="galeria">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458943116374573056/1.png?ex=69617a28&is=696028a8&hm=15a90e046624cd3758de6d9641e6b97748a03ea3fe19494d9ce47220495b5627&=&format=webp&quality=lossless&width=960&height=960" alt="Foto 1">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458946827758997557/gif.gif?ex=69617d9d&is=69602c1d&hm=5e9e7520e904c798052222d56add3cc51c001ce4adc44fa9420d89970d232525&=" alt="Foto 2">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458948349578317865/gi2.gif?ex=69617f08&is=69602d88&hm=11639c275080858ab0ebfc224eaa071a9f6073d780da07f8f73a417ac3280e39&=" alt="Foto 3">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458950803225313341/Proyecto_nuevo_8.png?ex=69618151&is=69602fd1&hm=ca054703fac80cad3ce158cadee1c77fdcbb535a976647bd88eb987538186420&=&format=webp&quality=lossless&width=856&height=856" alt="Foto 4">
+        </div>
+
+        <h3 style="color:#D8789B; margin-top:30px; font-weight:400;">
+            Claramente hay otros como el de bailando salsa, la caminata en la montaña,
+            el karaoke (hay que hacer otro), la rueda de Chicago y los payasos terroristas jajaja.
+        </h3>
+    </section>
+
+    <!-- -------------------- FOOTER -------------------- -->
+    <footer>
+        Hecho con cariño por Sebas ✦
+        <div class="footer-secret">
+            Si algún día lees esto, quiero que sepas que tu felicidad siempre fue mi lugar seguro.
+        </div>
+    </footer>
+
+</body>
+</html>
