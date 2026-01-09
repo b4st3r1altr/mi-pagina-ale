@@ -18,7 +18,7 @@
             color: #E05278;
         }
 
-        /* -------------------- ANIMACIONES -------------------- */
+        /* -------------------- ANIMACIÓN BASE -------------------- */
         section {
             animation: fadeInUp 0.8s ease both;
         }
@@ -36,16 +36,12 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-color: #FFE9F1;
             position: relative;
             transition: 0.4s;
         }
 
-        .banner:hover {
-            filter: brightness(1.05);
-        }
+        .banner:hover { filter: brightness(1.05); }
 
-        /* Texto flotante del banner */
         .banner-text {
             position: absolute;
             bottom: 20px;
@@ -58,12 +54,8 @@
         }
 
         @media (max-width: 768px) {
-            .banner {
-                height: 250px;
-            }
-            .banner-text {
-                font-size: 1.6rem;
-            }
+            .banner { height: 250px; }
+            .banner-text { font-size: 1.6rem; }
         }
 
         /* -------------------- NAVBAR -------------------- */
@@ -88,9 +80,7 @@
             transition: 0.3s;
         }
 
-        .navbar a:hover {
-            color: #5A1E35;
-        }
+        .navbar a:hover { color: #5A1E35; }
 
         /* -------------------- SECCIONES -------------------- */
         section {
@@ -111,7 +101,6 @@
             white-space: pre-line;
         }
 
-        /* -------------------- NOTA DISNEY (oculta pero visible) -------------------- */
         .disney-note {
             font-size: 0.9rem;
             color: #D8789B;
@@ -150,13 +139,89 @@
             font-size: 0.85rem;
         }
 
-        /* -------------------- EASTER EGG -------------------- */
         .footer-secret {
             text-align: center;
             font-size: 0.8rem;
             color: #E08BAC;
             opacity: 0.6;
             margin-top: 15px;
+        }
+
+        /* -------------------- BOTÓN SECRETO -------------------- */
+        .boton-secreto {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(255, 182, 193, 0.4);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: #E05278;
+            transition: 0.3s;
+            z-index: 2000;
+        }
+
+        .boton-secreto:hover {
+            background: rgba(255, 182, 193, 0.7);
+            transform: scale(1.1);
+        }
+
+        /* -------------------- CARTA SECRETA (PANEL) -------------------- */
+        .carta-secreta {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 850px;
+            background: #ffffff;
+            padding: 50px 55px;
+            border-radius: 25px 25px 0 0;
+            box-shadow: 0 -8px 25px rgba(0,0,0,0.18);
+            transition: bottom 0.6s ease;
+            z-index: 3000;
+            max-height: 85%;
+            overflow-y: auto;
+            color: #4a4a4a;
+            line-height: 1.9;
+            font-size: 1.15rem;
+            letter-spacing: 0.3px;
+        }
+
+        .carta-secreta h2 {
+            text-align: center;
+            font-size: 1.9rem;
+            color: #E05278;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .carta-secreta p {
+            margin-bottom: 18px;
+            white-space: pre-line;
+            text-align: justify;
+        }
+
+        .separador {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #E7A8BD;
+            margin: 18px 0;
+            opacity: 0.8;
+        }
+
+        .carta-secreta::-webkit-scrollbar { width: 8px; }
+        .carta-secreta::-webkit-scrollbar-thumb {
+            background: #FFB7CC;
+            border-radius: 10px;
+        }
+        .carta-secreta::-webkit-scrollbar-track {
+            background: #ffeef3;
         }
     </style>
 </head>
@@ -177,110 +242,162 @@
 
     <!-- -------------------- SECCIÓN INICIO -------------------- -->
     <section id="inicio">
-        <h1>Para ti, Ale 💗</h1>
         <p style="font-size:1.2rem;">
             Esta página es un detalle hecho con mucho cariño.  
             Gracias por tomarte el tiempo de leer esto...
         </p>
     </section>
 
-    <!-- -------------------- SECCIÓN CARTA -------------------- -->
+    <!-- -------------------- CARTA PRINCIPAL -------------------- -->
     <section id="carta">
         <h2>La Carta <span style="color:#E05278;">♡</span></h2>
-
         <div class="carta-text">
-Para ti, Ale…
+        Para ti, Ale…
 
-Me dirijo a ti para expresarte mi perdón más sincero y también mi gratitud.
-Desde que me dijiste lo que realmente pensabas de mí ese día, te confieso que me dolió en lo profundo del corazón.
-He pasado estos días pensándolo una y otra vez, no como reproche, sino como una lección que necesitaba entender.
+        Me dirijo a ti para expresarte mi perdón más sincero y también mi gratitud.
+        Desde que me dijiste lo que realmente pensabas de mí ese día, te confieso que me dolió en lo profundo del corazón.
+        He pasado estos días pensándolo una y otra vez, no como reproche, sino como una lección que necesitaba entender.
 
-No sé cuándo te entregue esta carta, pero desde ese momento en que abriste tu corazón conmigo con tanta sinceridad, tus palabras no han dejado de darme vueltas por la cabeza.
-Y por eso te escribo: porque lo que dijiste me marcó, me hizo reflexionar y me hizo querer ser mejor.
+        No sé cuándo te entregue esta carta, pero desde ese momento en que abriste tu corazón conmigo con tanta sinceridad, tus palabras no han dejado de darme vueltas por la cabeza.
+        Y por eso te escribo: porque lo que dijiste me marcó, me hizo reflexionar y me hizo querer ser mejor.
 
-No te lo digo para presionarte ni para incomodarte.
-Te lo digo porque es la verdad.
-Porque aunque respeto tus límites, convivir con este cariño que tengo por ti a veces pesa más de lo que dejo ver.
+        No te lo digo para presionarte ni para incomodarte.
+        Te lo digo porque es la verdad.
+        Porque aunque respeto tus límites, convivir con este cariño que tengo por ti a veces pesa más de lo que dejo ver.
 
-Últimamente no me he sentido del todo bien desde que entendí ciertas cosas… porque al comprenderlas, me di cuenta de que mi cariño por ti pesa más de lo que yo mismo imaginaba.
-Es como un taladro emocional con baterías infinitas: no se apaga aunque yo quiera.
-Y no se apaga, no por obsesión, sino porque lo que sentí por ti fue honesto, fue real, y no nació para desaparecer de un día para otro.
+        Últimamente no me he sentido del todo bien desde que entendí ciertas cosas… porque al comprenderlas, me di cuenta de que mi cariño por ti pesa más de lo que yo mismo imaginaba.
+        Es como un taladro emocional con baterías infinitas: no se apaga aunque yo quiera.
+        Y no se apaga, no por obsesión, sino porque lo que sentí por ti fue honesto, fue real, y no nació para desaparecer de un día para otro.
 
-Quiero pedirte perdón, Ale.
-Por lo que dije estando confundido, por mis enojos mal manejados, por mis reacciones desde el miedo.
-Sé que mis palabras no siempre reflejaron lo que de verdad siento.
-Sé que te hice daño sin querer.
-Y eso sí me pesa.
+        Quiero pedirte perdón, Ale.
+        Por lo que dije estando confundido, por mis enojos mal manejados, por mis reacciones desde el miedo.
+        Sé que mis palabras no siempre reflejaron lo que de verdad siento.
+        Sé que te hice daño sin querer.
+        Y eso sí me pesa.
 
-Pero también quiero que sepas otra cosa:
-estoy cambiando.
-Estoy creciendo y madurando emocionalmente y espiritualmente hablando porque me di cuenta de mis defectos, y no quiero esconderlos.
+        Pero también quiero que sepas otra cosa:
+        estoy cambiando.
+        Estoy creciendo y madurando emocionalmente porque me di cuenta de mis defectos, y no quiero esconderlos.
 
-Quiero mejorarlos porque tú me inspiraste a ser más paciente, más claro, más seguro y más estable.
-No por obligación ni por presión, sino porque cuando una persona vale la pena, uno sí se puede cambiar de verdad.
+        Quiero mejorarlos porque tú me inspiraste a ser más paciente, más claro, más seguro y más estable.
+        No por obligación ni por presión, sino porque cuando una persona vale la pena, uno sí se puede cambiar de verdad.
 
-Y aunque esto te suene curioso, hay algo que quiero dejártelo para meditar:
-hay ciertas estrellas que uno mira y no puede evitar pensar en alguien.
-No por lo que brillan, sino por lo que inspiran.
-Por la forma en que, aunque estén lejos o detrás de nubes, siguen ahí… constantes, firmes, iluminando de una manera tranquila que no todos entienden.
-Supongo que eso me pasó contigo.
-Y si lees con atención, vas a entender exactamente a qué me refiero.
+        Y aunque esto te suene curioso, hay algo que quiero dejártelo para meditar:
+        hay ciertas estrellas que uno mira y no puede evitar pensar en alguien.
+        No por lo que brillan, sino por lo que inspiran.
+        Por la forma en que, aunque estén lejos o detrás de nubes, siguen ahí… constantes, firmes, iluminando de una manera tranquila que no todos entienden.
+        Supongo que eso me pasó contigo.
+        Y si lees con atención, vas a entender exactamente a qué me refiero.
 
-Yo espero —desde lo más honesto y profundo de mi corazón— que algún día me des la oportunidad de conocerme en persona de verdad.
-De mostrarte quién soy sin una pantalla.
-De demostrarte que sí puedo estar a tu nivel… a tus expectativas… a la vida que sueñas para ti.
+        Yo espero —desde lo más honesto y profundo de mi corazón— que algún día me des la oportunidad de conocerme en persona de verdad.
+        De mostrarte quién soy sin una pantalla.
+        De demostrarte que sí puedo estar a tu nivel… a tus expectativas… a la vida que sueñas para ti.
 
-Sé que para ti es más cómodo pensar en la amistad…
-pero para mí es difícil, porque cuando uno siente lo que yo siento por ti, la amistad se queda corta.
-Y ambos sabemos lo que pasó por nuestra mente y por nuestro corazón.
+        Sé que para ti es más cómodo pensar en la amistad…
+        pero para mí es difícil, porque cuando uno siente lo que yo siento por ti, la amistad se queda corta.
+        Y ambos sabemos lo que pasó por nuestra mente y por nuestro corazón.
 
-Aun así, lo respeto.
-Y te respeto a ti, Ale.
+        Aun así, lo respeto.
+        Y te respeto a ti, Ale.
 
-No te escribo para cambiar tu decisión hoy.
-Te escribo para que sepas que aquí estoy: con cariño sincero, con paciencia, con crecimiento real…
-y con la esperanza tranquila de que algún día tengamos esa oportunidad que quedó pendiente.
- 
-Gracias por lo que fuiste.
-Gracias por lo que eres.
-Gracias por lo que quizá podamos ser, si alguna vez te nace intentarlo en serio.
+        No te escribo para cambiar tu decisión hoy.
+        Te escribo para que sepas que aquí estoy: con cariño sincero, con paciencia, con crecimiento real…
+        y con la esperanza tranquila de que algún día tengamos esa oportunidad que quedó pendiente.
 
-Que Jehová, a quien conoces, te cuide siempre.
-Y aquí estoy, a la orden… sin presiones, pero con el corazón abierto.
+        Gracias por lo que fuiste.
+        Gracias por lo que eres.
+        Gracias por lo que quizá podamos ser, si alguna vez te nace intentarlo en serio.
 
-Att: Sebas
+        Que Jehová, a quien conoces, te cuide siempre.
+        Y aquí estoy, a la orden… sin presiones, pero con el corazón abierto.
+
+        Att: Sebas
         </div>
-
-        <!-- Nota estilo Disney -->
-        <div class="disney-note">
-            *"Hay luces que no se apagan, aunque estén lejos."*
-        </div>
+        <div class="disney-note">*"Hay luces que no se apagan, aunque estén lejos."*</div>
     </section>
 
-    <!-- -------------------- SECCIÓN GALERÍA -------------------- -->
+    <!-- -------------------- GALERÍA -------------------- -->
     <section id="galeria">
-        <h2>Fotos de los mejores momentos 📸</h2>
+        <h2>Fotos de Momentos Contigo 📸</h2>
         <div class="galeria">
-            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458943116374573056/1.png?ex=69617a28&is=696028a8&hm=15a90e046624cd3758de6d9641e6b97748a03ea3fe19494d9ce47220495b5627&=&format=webp&quality=lossless&width=960&height=960" alt="Foto 1">
-            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458946827758997557/gif.gif?ex=69617d9d&is=69602c1d&hm=5e9e7520e904c798052222d56add3cc51c001ce4adc44fa9420d89970d232525&=" alt="Foto 2">
-            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458948349578317865/gi2.gif?ex=69617f08&is=69602d88&hm=11639c275080858ab0ebfc224eaa071a9f6073d780da07f8f73a417ac3280e39&=" alt="Foto 3">
-            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458950803225313341/Proyecto_nuevo_8.png?ex=69618151&is=69602fd1&hm=ca054703fac80cad3ce158cadee1c77fdcbb535a976647bd88eb987538186420&=&format=webp&quality=lossless&width=856&height=856" alt="Foto 4">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458943116374573056/1.png?ex=69617a28&is=696028a8&hm=15a90e046624cd3758de6d9641e6b97748a03ea3fe19494d9ce47220495b5627&=&format=webp&quality=lossless&width=856&height=856">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458946827758997557/gif.gif?ex=69617d9d&is=69602c1d&hm=5e9e7520e904c798052222d56add3cc51c001ce4adc44fa9420d89970d232525&=">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458948349578317865/gi2.gif?ex=69617f08&is=69602d88&hm=11639c275080858ab0ebfc224eaa071a9f6073d780da07f8f73a417ac3280e39&=">
+            <img src="https://media.discordapp.net/attachments/1427070558834786456/1458950803225313341/Proyecto_nuevo_8.png?ex=69618151&is=69602fd1&hm=ca054703fac80cad3ce158cadee1c77fdcbb535a976647bd88eb987538186420&=&format=webp&quality=lossless&width=856&height=856">
         </div>
-
-        <h3 style="color:#D8789B; margin-top:30px; font-weight:400;">
-            Claramente hay otros como el de bailando salsa, la caminata en la montaña,
-            el karaoke (hay que hacer otro), la rueda de Chicago y los payasos terroristas jajaja.
-        </h3>
     </section>
+
+    <!-- -------------------- BOTÓN SECRETO -------------------- -->
+    <div class="boton-secreto" onclick="toggleCartaSecreta()">
+        <span>♡</span>
+    </div>
+
+    <!-- -------------------- CARTA SECRETA OCULTA -------------------- -->
+    <div id="cartaSecreta" class="carta-secreta">
+        <h2>Una Respuesta Oculta...</h2>
+
+        <p>Ale…
+
+        No sé si algún día vas a encontrar este rincón escondido, pero si estás leyendo esto, es por que lo encontrastes JAJA entonces ya sabés que siempre hubo cosas que yo quería decirte… pero nunca supe cómo.
+
+        Leí tu carta más de una vez. A veces porque la necesitaba, a veces porque me hacía sentir querido, y últimamente porque me dolía no haber sabido estar a tu altura cuando más lo merecías.</p>
+
+        <p>Cuando me escribiste todo lo que pensabas de mí —esa mezcla tan tuya de ternura, sinceridad y detalle— yo no entendí en ese momento lo mucho que significaba. Hoy sí lo entiendo. Hoy sé que me llegastes a ver de una forma que ni yo mismo sabía verme.</p>
+
+        <div class="separador">✦</div>
+
+        <p>Eso no se olvida, Ale. Eso no se supera así nomás. A veces me pongo a pensar en esa primera llamada intima que conversamos sobre un tema un importa sobre Dios, en cómo hablaste con una paz que hasta hoy recuerdo. En cómo, sin querer, te metiste en mi vida con una naturalidad que nadie más logró.</p>
+
+        <p>Me dijiste que yo te hacía sentir segura… pero tal vez nunca supiste que usted también hacías lo mismo conmigo. Tu forma de escucharme, de reírte, de enojarte un poquito, de ponerte sentida, todo eso me hacía sentir cercano a ti de una forma que no me pasaba con nadie.</p>
+
+        <div class="separador">✦</div>
+
+        <p>Y sí, Ale… yo también te tomé cariño. Mucho más del que quise aceptar al inicio. Me dijiste 21 razones por las que según usted yo soy especial para ti. Yo quiero darte una sola razón por la que usted es especial para mí:</p>
+
+        <p><strong>Porque viste una versión mía que yo no sabía que podía llegar a ser.</strong></p>
+
+        <div class="separador">♡</div>
+
+        <p>Y gracias a esa carta tuya yo hoy tengo metas reales. Metas para este año. Para mejorar. Para crecer. Para estar a la altura de lo que algún día te inspiré.</p>
+
+
+        <p>✦ Quiero aprender a manejar mis enojos.  
+        ✦ Quiero ser más claro cuando algo me duele.  
+        ✦ Quiero ser paciente incluso cuando tengo miedo.  
+        ✦ Quiero escucharte sin reaccionar desde la impulsividad.  
+        ✦ Quiero tratarme mejor para tratar mejor a quien quiero.  
+        ✦ Quiero ser alguien estable, firme, seguro… como esa versión de mí que vistes y que yo quiero volver a encontrar.</p>
+
+        <div class="separador">✦</div>
+
+        <p>No sé qué va a pasar entre tu y yo. No sé si esto llegará a ser algo más o si quedará en un “qué hubiera pasado”. Pero sí sé algo:</p>
+
+        <p><strong>Vos dejaste una huella en mí. Una de las buenas. De las que enseñan. De las que construyen.</strong></p>
+
+        <p>Y si algún día Dios permite que nos crucemos de verdad, en persona, sin pantallas, sin miedos, yo quiero llegar a ese día siendo la mejor versión de mí mismo. No para impresionarte. No para recuperarte. Sino porque vos me inspiraste a querer serlo.</p>
+
+        <div class="separador">♡</div>
+
+        <p>Gracias por lo que fuiste, Ale.  
+        Gracias por lo que eres.  
+        Y gracias por la carta que me hicistes hace unos meses, guardé más de lo que puedes imaginar.</p>
+
+        <p>—Sebas</p>
+    </div>
 
     <!-- -------------------- FOOTER -------------------- -->
     <footer>
-        Hecho con cariño por Sebas ✦
-        <div class="footer-secret">
-            Si algún día lees esto, quiero que sepas que tu felicidad siempre fue mi lugar seguro.
-        </div>
+        Hecho con cariño por Sebas — Enero 2026 ✦
+        <div class="footer-secret">Si algún día lees esto, quiero que sepas que tu felicidad siempre fue mi lugar seguro.</div>
     </footer>
+
+    <!-- -------------------- SCRIPT -------------------- -->
+    <script>
+        function toggleCartaSecreta() {
+            const panel = document.getElementById("cartaSecreta");
+            panel.style.bottom = (panel.style.bottom === "0px") ? "-100%" : "0px";
+        }
+    </script>
 
 </body>
 </html>
-
