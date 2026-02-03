@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta para Alexa</title>
+  <style>
+    :root{
+      --bg1:#0b1220;
+      --bg2:#0e1b2e;
+      --card:#0f1c2fdd;
+      --text:#e8eefc;
+      --muted:#b7c6e6;
+      --accent:#7cf0c5;   /* toque suave */
+      --accent2:#8aa6ff;  /* toque suave */
+      --border:rgba(255,255,255,0.10);
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+      --radius: 22px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1100px 600px at 10% 10%, rgba(124,240,197,0.12), transparent 55%),
+        radial-gradient(900px 600px at 90% 25%, rgba(138,166,255,0.14), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(255,255,255,0.06), transparent 55%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 26px 14px;
+    }
+
+    .wrap{
+      width:min(920px, 100%);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      user-select:none;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(124,240,197,0.35);
+    }
+    .badge span{
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing:0.2px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight:600;
+      font-size: 13px;
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      border:1px solid var(--border);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    button:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.18);
+    }
+    button.primary{
+      background: linear-gradient(135deg, rgba(124,240,197,0.22), rgba(138,166,255,0.18));
+      border-color: rgba(124,240,197,0.22);
+    }
+    button.primary:hover{
+      border-color: rgba(124,240,197,0.35);
+      background: linear-gradient(135deg, rgba(124,240,197,0.28), rgba(138,166,255,0.22));
+    }
+
+    .card{
+      position:relative;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(120deg, rgba(124,240,197,0.20), rgba(138,166,255,0.18), transparent 60%);
+      opacity:0.35;
+      filter: blur(18px);
+      pointer-events:none;
+    }
+
+    .card-inner{
+      position:relative;
+      padding: 28px 22px;
+    }
+
+    .header{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom: 18px;
+    }
+    .title{
+      font-size: clamp(22px, 4vw, 34px);
+      line-height: 1.05;
+      margin:0;
+      letter-spacing: -0.4px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      margin: 18px 0 18px;
+    }
+
+    .letter{
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .6s ease, transform .6s ease;
+      white-space: pre-wrap;
+    }
+    .letter.show{
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    .highlight{
+      background: linear-gradient(90deg, rgba(124,240,197,0.16), rgba(138,166,255,0.12));
+      border:1px solid rgba(255,255,255,0.10);
+      padding: 14px 14px;
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin: 14px 0 0;
+    }
+
+    .signature{
+      margin-top: 18px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      align-items:flex-end;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .sig-name{
+      font-family: var(--mono);
+      color: var(--text);
+      letter-spacing: 0.6px;
+      font-size: 14px;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(15,28,47,0.92);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    @media (min-width: 700px){
+      .card-inner{ padding: 34px 34px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <div class="badge" aria-label="Etiqueta">
+        <div class="dot"></div>
+        <span>Hola Alexa</span>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="btnLeer">Leer la carta</button>
+        <button id="btnCopiar">Copiar</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="card-inner">
+        <header class="header">
+          <h1 class="title">Carta para Alexa</h1>
+        </header>
+
+        <div class="divider"></div>
+
+        <article class="letter" id="letter">
+Alexa,
+
+He pensado mucho en lo que pasó.
+Pero esta vez no desde el orgullo, ni desde el dolor, ni desde el miedo a perderte.
+Sino desde la calma.
+
+Tú me diste 21 razones.
+
+Y cuando las releí, entendí algo que me golpeó fuerte:
+tú no estabas enamorada de palabras.
+Estabas enamorada del hombre que esas palabras describían.
+
+De la madurez que inspira confianza.
+De la firmeza que pone orden cuando todo parece caos.
+De la paciencia que escucha antes de reaccionar.
+De la autoridad tranquila que no necesita imponerse para ser respetada.
+De la seguridad que hace sentir protegida y no confundida.
+
+Y en ese momento… yo no fui ese hombre.
+
+No voy a decir que era “otro Sebastián”.
+No voy a culpar circunstancias.
+No voy a dramatizar.
+
+Simplemente no supe sostener la versión de mí que tú veías.
+
+Y entiendo que eso haya matado ilusión.
+
+Pero quiero que sepas algo con honestidad:
+esas 21 razones no fueron inventadas.
+No fueron fantasía tuya.
+Eran reales.
+
+Y si alguna vez dejé de actuar conforme a ellas, no fue porque no existieran,
+fue porque me desconecté de quien debo ser cuando estoy centrado.
+
+Yo no quiero competir con nadie.
+No quiero convencerte con presión.
+No quiero prometer lo que no puedo sostener.
+
+Solo quiero volver a ser coherente.
+
+Coherente con mi fe.
+Coherente con mi carácter.
+Coherente con el hombre que tú admirabas.
+
+No te escribo para que cambies lo que sientes hoy.
+Te escribo porque entendí lo que no entendí ese día.
+
+Si algún día vuelves a mirarme,
+quiero que veas firmeza, no confusión.
+Seguridad, no impulsividad.
+Carácter, no dramatismo.
+
+Yo te amo.
+Pero esta vez no desde la desesperación,
+sino desde la responsabilidad.
+
+Y eso cambia todo.
+        </article>
+
+
+        <div class="signature" aria-label="Firma">
+          <div class="sig-name">— Sebastián</div>
+          <div>02 de febrero de 2026 | 10:33 am</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Copiado ✅</div>
+
+  <script>
+    const btnLeer = document.getElementById("btnLeer");
+    const btnCopiar = document.getElementById("btnCopiar");
+    const letter = document.getElementById("letter");
+    const toast = document.getElementById("toast");
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1200);
+    }
+
+    btnLeer.addEventListener("click", () => {
+      letter.classList.add("show");
+      btnLeer.textContent = "Carta visible";
+      btnLeer.disabled = true;
+      btnLeer.style.opacity = "0.7";
+      btnLeer.style.cursor = "default";
+    });
+
+    btnCopiar.addEventListener("click", async () => {
+      const text = letter.innerText.trim();
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Copiado ✅");
+      }catch(e){
+        // Fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast("Copiado ✅");
+      }
+    });
+
+    // Pequeña suavidad: mostrar carta automáticamente en pantallas grandes (opcional)
+    // Comenta estas líneas si no lo quieres:
+    if (window.matchMedia("(min-width: 900px)").matches) {
+      setTimeout(() => {
+        letter.classList.add("show");
+        btnLeer.textContent = "Carta visible";
+        btnLeer.disabled = true;
+        btnLeer.style.opacity = "0.7";
+        btnLeer.style.cursor = "default";
+      }, 250);
+    }
+  </script>
+</body>
+</html>
