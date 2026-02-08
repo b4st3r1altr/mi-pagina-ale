@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta para Ale</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Rosado / Blanco / Amarillo */
+      --pink-1: #ffb6c1;
+      --pink-2: #ff7aa8;
+      --white:  #ffffff;
+      --yellow: #ffd966;
+      --ink:    #2b2b2b;
+      --shadow: rgba(0,0,0,.14);
+      --glass:  rgba(255,255,255,.55);
+      --border: rgba(255, 122, 168, 0.28);
+    }
+
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
+
+    body{
+      font-family: 'Lora', serif;
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,217,102,.55), transparent 45%),
+        radial-gradient(circle at 80% 25%, rgba(255,182,193,.65), transparent 50%),
+        linear-gradient(135deg, #ffffff 0%, #fff7cf 45%, #ffd6e2 100%);
+      position: relative;
+    }
+
+    /* Grano */
+    body::before{
+      content:'';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .25;
+      z-index: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    }
+
+    /* Partículas */
+    .particles{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .particle{
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,217,102,.95) 0%, rgba(255,217,102,0) 70%);
+      animation: float 10s infinite ease-in-out;
+      opacity: 0;
+      filter: blur(.2px);
+    }
+    @keyframes float{
+      0%, 100% { transform: translateY(0) translateX(0) scale(.9); opacity: 0; }
+      12% { opacity: .9; }
+      50% { transform: translateY(-105vh) translateX(60px) scale(1.1); opacity: .55; }
+      85% { opacity: .2; }
+    }
+
+    /* Barra superior */
+    .topbar{
+      position: relative;
+      z-index: 15;
+      padding: 18px 18px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255, 122, 168, 0.22);
+      border-radius: 999px;
+      box-shadow: 0 10px 26px var(--shadow);
+      backdrop-filter: blur(10px);
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+    }
+    .badge .dot{
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-2), var(--yellow));
+      box-shadow: 0 0 0 3px rgba(255, 217, 102, .25);
+    }
+
+    /* Música */
+    .music-control{
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .music-toggle{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 122, 168, 0.28);
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      padding: 12px 16px;
+      box-shadow: 0 12px 30px var(--shadow);
+      transition: transform .2s ease, background .2s ease;
+      font-family: 'Crimson Text', serif;
+      user-select: none;
+    }
+    .music-toggle:hover{ transform: translateY(-2px); background: rgba(255,255,255,.8); }
+
+    .music-toggle .icon{
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--pink-2), var(--yellow));
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(255, 122, 168, .25);
+      font-size: 16px;
+    }
+
+    .music-panel{
+      width: min(360px, calc(100vw - 36px));
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255, 122, 168, 0.25);
+      border-radius: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      transform-origin: top right;
+      transform: scale(.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .music-panel.active{
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    .music-panel .panel-head{
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 122, 168, 0.18);
+      font-family: 'Crimson Text', serif;
+    }
+    .panel-head small{ opacity: .75; }
+    .panel-head button{
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 20px;
+      opacity: .65;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .panel-head button:hover{ opacity: 1; transform: rotate(90deg); }
+
+    /* Contenedor */
+    .container{
+      position: relative;
+      z-index: 10;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 18px 78px;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .hero-card{
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255, 122, 168, .24);
+      border-radius: 24px;
+      padding: 34px 28px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.12);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before{
+      content:'';
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(circle at 20% 20%, rgba(255,217,102,.55), transparent 45%),
+                  radial-gradient(circle at 85% 30%, rgba(255,122,168,.45), transparent 50%);
+      z-index: 0;
+      filter: blur(2px);
+    }
+    .hero-card > *{ position: relative; z-index: 1; }
+
+    .hero-title{
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.6rem, 6vw, 4.6rem);
+      color: #ff4f91;
+      text-shadow: 2px 2px 10px rgba(0,0,0,.08);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .hero-subtitle{
+      font-family: 'Crimson Text', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      opacity: .86;
+      margin-bottom: 18px;
+    }
+
+    .chips{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 22px;
+    }
+    .chip{
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 122, 168, .22);
+      background: rgba(255,255,255,.55);
+      font-family: 'Crimson Text', serif;
+      box-shadow: 0 10px 24px rgba(0,0,0,.08);
+    }
+
+    /* Botón abrir */
+    .open-letter{
+      width: 100%;
+      max-width: 360px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--pink-2), var(--yellow));
+      color: #fff;
+      font-family: 'Crimson Text', serif;
+      font-size: 1.25rem;
+      box-shadow: 0 18px 45px rgba(255, 122, 168, .22);
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    .open-letter:hover{
+      transform: translateY(-3px);
+      filter: brightness(1.02);
+      box-shadow: 0 22px 55px rgba(255, 122, 168, .28);
+    }
+    .open-letter .heart{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.22);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+    }
+
+    /* Nota */
+    .side-card{
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(255, 122, 168, .22);
+      border-radius: 24px;
+      padding: 22px 18px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.10);
+      backdrop-filter: blur(12px);
+    }
+    .side-card h3{
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.1rem;
+      color: #ff4f91;
+      margin-bottom: 10px;
+    }
+    .side-card p{
+      font-family: 'Crimson Text', serif;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      opacity: .88;
+    }
+
+    /* ====== IMAGEN GRANDE ABAJO (LO QUE PEDISTE) ======
+       MEDIDA RECOMENDADA PARA TU FOTO: 1600x600 px (o 1920x720)
+       Ratio parecido: 16:6 (2.67:1)
+    */
+    .bottom-image{
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+    }
+    .image-frame{
+      width: min(980px, 92vw);      /* ancho máximo en PC */
+      aspect-ratio: 16 / 6;         /* ideal para 1600x600 */
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255, 122, 168, 0.22);
+      border-radius: 24px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.12);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      position: relative;
+    }
+    .image-frame img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;            /* llena sin deformar */
+      object-position: center;      /* foco */
+      display: block;
+    }
+    /* Texto opcional encima de la imagen (si no querés, borrá este bloque y el HTML de .image-caption) */
+    .image-caption{
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255, 122, 168, 0.20);
+      box-shadow: 0 14px 30px rgba(0,0,0,.10);
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      color: #2b2b2b;
+      max-width: calc(100% - 32px);
+    }
+
+    /* Modal carta */
+    .letter-modal{
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(10px);
+    }
+    .letter-modal.active{ display: flex; }
+
+    .letter-container{
+      width: min(860px, 100%);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 122, 168, 0.22);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+      position: relative;
+      padding: 52px 42px;
+    }
+
+    .letter-container::before{
+      content:'';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .55;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,217,102,.35), transparent 45%),
+        radial-gradient(circle at 82% 22%, rgba(255,122,168,.22), transparent 55%);
+    }
+
+    .close-letter{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(255, 122, 168, .25);
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 22px;
+      width: 44px;
+      height: 44px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
+      transition: transform .2s ease;
+      z-index: 10;
+    }
+    .close-letter:hover{ transform: rotate(90deg); }
+
+    .letter-title{
+      position: relative;
+      z-index: 1;
+      font-family: 'Dancing Script', cursive;
+      text-align: center;
+      font-size: 2.6rem;
+      color: #ff4f91;
+      margin-bottom: 18px;
+    }
+
+    .letter-content{
+      position: relative;
+      z-index: 1;
+      font-family: 'Crimson Text', serif;
+      font-size: 1.18rem;
+      line-height: 1.95;
+      color: #1f1f1f;
+    }
+    .letter-content p{ margin-bottom: 16px; text-indent: 26px; }
+    .letter-content p.no-indent{ text-indent: 0; }
+
+    .signature{
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.9rem;
+      text-align: right;
+      margin-top: 28px;
+      color: #ff4f91;
+    }
+
+    /* Responsive */
+    @media (max-width: 880px){
+      .hero{ grid-template-columns: 1fr; }
+      .music-control{ top: 14px; right: 14px; }
+    }
+    @media (max-width: 520px){
+      .letter-container{ padding: 44px 20px; }
+      .image-caption{ font-size: .98rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particles" id="particles"></div>
+
+  <!-- Música (Spotify) -->
+  <div class="music-control">
+    <div class="music-toggle" id="musicToggle" title="Abrir/Replegar música">
+      <div class="icon">🎵</div>
+      <div>
+        <div style="font-weight:600;">Música</div>
+        <small style="opacity:.75;">Spotify</small>
+      </div>
+    </div>
+
+    <div class="music-panel" id="musicPanel">
+      <div class="panel-head">
+        <div>
+          <div style="font-weight:600;">Reproductor</div>
+          <small>Si no suena aquí, abrilo en Spotify.</small>
+        </div>
+        <button id="musicClose" aria-label="Cerrar">×</button>
+      </div>
+
+      <iframe
+        style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/47PiSg7z5qjUyEGKN4I1g7?utm_source=generator"
+        width="100%"
+        height="152"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+
+      <div style="padding: 12px 14px 14px; font-family:'Crimson Text', serif;">
+        <a href="https://open.spotify.com/intl-es/track/47PiSg7z5qjUyEGKN4I1g7?si=114cf13ddee64f43"
+           target="_blank"
+           style="display:inline-block; text-decoration:none; padding:10px 12px; border-radius:12px; border:1px solid rgba(255,122,168,.25); background: rgba(255,255,255,.65); color:#1f1f1f;">
+          Abrir en Spotify ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="badge">
+      <span class="dot"></span>
+      <span>Una carta sencilla, pero honesta.</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HOMEPAGE -->
+    <section class="hero">
+      <div class="hero-card">
+        <h1 class="hero-title">Para Ale</h1>
+        <p class="hero-subtitle">Hay cosas que uno escribe con el corazón… aunque no sepa si serán leídas.</p>
+
+        <div class="chips">
+          <div class="chip">Rosado</div>
+          <div class="chip">Blanco</div>
+          <div class="chip">Amarillo</div>
+        </div>
+
+        <button class="open-letter" id="openLetter">
+          <span class="heart">💛</span>
+          Abrir Carta
+        </button>
+      </div>
+
+      <aside class="side-card">
+        <h3>Nota</h3>
+        <p>
+          Cuando querás, podés leerla con calma.
+          Y si querés, dejá la música de fondo desde el botón 🎵.
+        </p>
+      </aside>
+    </section>
+
+    <!-- ====== BLOQUE IMAGEN GRANDE ABAJO ====== -->
+    <section class="bottom-image">
+      <div class="image-frame">
+        <!-- Cambiá el src por tu imagen (recomendado: 1600x600px) -->
+        <img src="https://media.discordapp.net/attachments/1427070558834786456/1470202555383414924/alele.png?ex=698a7054&is=69891ed4&hm=f1b4eb98cc17e54aa33a3d2ffa61a433f2efff36347a85ef0e1e41ae5847d85c&=&format=webp&quality=lossless&width=1228&height=461" alt="Imagen especial para Ale">
+        <!-- Opcional: texto encima -->
+        
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal carta -->
+  <div class="letter-modal" id="letterModal" aria-hidden="true">
+    <div class="letter-container" role="dialog" aria-modal="true" aria-label="Carta para Ale">
+      <button class="close-letter" id="closeLetter" aria-label="Cerrar">×</button>
+
+      <h2 class="letter-title">Hola Ale</h2>
+
+      <div class="letter-content">
+        <!-- CARTA EXACTA -->
+        <p class="no-indent"><strong>Hola Ale,</strong></p>
+
+        <p>Honestamente no sé si vayas a leer esto, pero nada pierdo con intentarlo.</p>
+
+        <p>Han pasado varios días desde que nos distanciamos y, desde entonces, no he dejado de preguntarme cómo estás, si estás bien. He vivido con esa incertidumbre porque, siendo sincero, extraño tu amistad. Extraño esas noches en las que conversábamos por horas, extraño los días en los que simplemente existíamos sin hacer nada… y aun así eran los mejores momentos.</p>
+
+        <p>En lo personal, no sé cómo lo estés viviendo tú, pero yo me aislé mucho de las personas. Con el tiempo entendí que fue un error, y lo tuve que aprender de la manera difícil. Jehová Dios me ayudó a darme cuenta de eso. Me hizo reflexionar sobre el camino que estaba tomando y poco a poco me está ayudando a salir de ese aislamiento en el que yo mismo me metí.</p>
+
+        <p>Hay un texto que me hizo pensar mucho, Proverbios 18:1, que dice en parte: <em>“El que se aísla persigue sus propios deseos egoístas; rechaza toda sabiduría práctica.”</em> Cuando lo leí, entendí que el aislamiento muchas veces nace del egoísmo, y el egoísmo va en contra del amor. No fue fácil aceptarlo, al principio me hizo sentir mal porque reconocí que estaba fallando. Pero también me ayudó a tomar decisiones, como volver a buscar a algunos amigos que había dejado atrás.</p>
+
+        <p>Y dentro de todo eso, pensé mucho en ti. En la amiga fiel que siempre estuvo ahí. En la persona que me prometió que siempre podría contar con ella, sin presiones ni complicaciones, simplemente para estar. También recordé aquel día en que me dijiste que estabas orgullosa de mí. Puede sonar simple, pero nadie antes me había dicho algo así. Y ahora que lo pienso con calma, fue algo muy profundo para mí.</p>
+
+        <p>No quiero cansarte con palabras ni quitarte tiempo. Solo quiero decirte que me gustaría volver a conversar contigo, siempre y cuando tú así lo desees. No quiero presionarte. Si decides que no, lo entenderé y respetaré tu decisión. Pero si estás dispuesta, aquí estoy, con la intención sincera de hacer las cosas mejor.</p>
+
+        <p>Gracias por leerme, si llegaste hasta aquí.</p>
+
+        <div class="signature"><br>Sebastián</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Partículas
+    const particles = document.getElementById("particles");
+    const PARTICLE_COUNT = 24;
+
+    function rand(min, max){ return Math.random() * (max - min) + min; }
+
+    for(let i=0;i<PARTICLE_COUNT;i++){
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = rand(0, 100) + "vw";
+      p.style.top = rand(70, 110) + "vh";
+      p.style.animationDuration = rand(7, 12) + "s";
+      p.style.animationDelay = rand(0, 6) + "s";
+      particles.appendChild(p);
+    }
+
+    // Modal carta
+    const openBtn = document.getElementById("openLetter");
+    const modal = document.getElementById("letterModal");
+    const closeBtn = document.getElementById("closeLetter");
+
+    function openModal(){
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(){
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.classList.contains("active")) closeModal();
+    });
+
+    // Música (panel)
+    const musicToggle = document.getElementById("musicToggle");
+    const musicPanel = document.getElementById("musicPanel");
+    const musicClose = document.getElementById("musicClose");
+
+    function toggleMusicPanel(){
+      musicPanel.classList.toggle("active");
+    }
+
+    musicToggle.addEventListener("click", toggleMusicPanel);
+    musicClose.addEventListener("click", () => musicPanel.classList.remove("active"));
+
+    // Cerrar panel música si clic fuera
+    document.addEventListener("click", (e) => {
+      const inMusic = e.target.closest(".music-control");
+      if(!inMusic && musicPanel.classList.contains("active")){
+        musicPanel.classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>
