@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ramo de Rosas — Detalle para Ale</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --white:#ffffff;
+      --pink:#ff7aa8;
+      --pink2:#ffb6c1;
+      --red:#e11d48;
+      --red2:#b91c1c;
+      --yellow:#ffd966;
+      --ink:#1f1f1f;
+      --shadow: rgba(0,0,0,.16);
+      --glass: rgba(255,255,255,.62);
+      --border: rgba(255, 122, 168, 0.22);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,217,102,.35), transparent 45%),
+        radial-gradient(circle at 80% 25%, rgba(255,122,168,.25), transparent 55%),
+        radial-gradient(circle at 70% 80%, rgba(225,29,72,.15), transparent 55%),
+        linear-gradient(135deg, #ffffff 0%, #fff3f7 45%, #ffe7ef 100%);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    /* grano */
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.20;
+      z-index:1;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    }
+
+    /* sparkles */
+    .particles{ position:fixed; inset:0; pointer-events:none; z-index:2; }
+    .spark{
+      position:absolute; width:8px; height:8px; border-radius:50%;
+      background: radial-gradient(circle, rgba(255,217,102,.95) 0%, rgba(255,217,102,0) 70%);
+      animation: float 10s infinite ease-in-out;
+      opacity:0;
+    }
+    @keyframes float{
+      0%,100%{ transform:translateY(0) translateX(0) scale(.9); opacity:0; }
+      12%{ opacity:.9; }
+      50%{ transform:translateY(-105vh) translateX(60px) scale(1.1); opacity:.55; }
+      85%{ opacity:.2; }
+    }
+
+    .container{
+      position:relative;
+      z-index:10;
+      max-width:1100px;
+      margin:0 auto;
+      padding:56px 18px 80px;
+    }
+
+    header{
+      text-align:center;
+      margin-bottom: 18px;
+    }
+    .title{
+      font-family:'Dancing Script', cursive;
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      color: var(--red);
+      text-shadow: 2px 2px 12px rgba(0,0,0,.08);
+      line-height:1;
+    }
+    .subtitle{
+      margin-top:10px;
+      font-family:'Crimson Text', serif;
+      font-size: 1.2rem;
+      opacity:.86;
+      font-style: italic;
+    }
+
+    .panel{
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.10);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+      position:relative;
+    }
+    .panel::before{
+      content:'';
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 18% 25%, rgba(255,217,102,.20), transparent 45%),
+        radial-gradient(circle at 82% 30%, rgba(225,29,72,.14), transparent 55%),
+        radial-gradient(circle at 70% 85%, rgba(255,122,168,.12), transparent 50%);
+      filter: blur(2px);
+      z-index:0;
+    }
+    .panel > *{ position:relative; z-index:1; }
+
+    .panel-head{
+      padding: 18px 20px 8px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .panel-head h2{
+      font-family:'Crimson Text', serif;
+      font-size: 1.55rem;
+      margin:0;
+      color: #a10f2f;
+    }
+    .panel-head p{
+      margin-top:6px;
+      opacity:.82;
+      max-width: 780px;
+      line-height:1.6;
+    }
+
+    /* ====== RAMO REAL (FOTO) ====== */
+    .bouquet-stage{
+      padding: 10px 16px 18px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .bouquet-card{
+      width: min(920px, 96vw);
+      border-radius: 22px;
+      overflow:hidden;
+      border: 1px solid rgba(225,29,72,.18);
+      box-shadow: 0 26px 70px rgba(0,0,0,.12);
+      background: rgba(255,255,255,.4);
+      position:relative;
+    }
+
+    /* Foto del ramo */
+    .bouquet-photo{
+      width: 100%;
+      height: auto;
+      display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    /* Overlay para hotspots */
+    .hotspots{
+      position:absolute;
+      inset:0;
+      pointer-events:none; /* se habilita solo en los botones */
+    }
+
+    /* Botón con forma de pétalo */
+    .petal-hotspot{
+      pointer-events:auto;
+      position:absolute;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      outline: none;
+      /* ayuda accesibilidad */
+      border-radius: 999px;
+    }
+
+    /* “Pétalo visible” sutil para que se note dónde tocar */
+    .petal-hotspot::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: 999px;
+      /* Forma de pétalo con clip-path */
+      clip-path: polygon(
+        50% 0%,
+        62% 6%,
+        73% 16%,
+        83% 30%,
+        90% 46%,
+        88% 62%,
+        80% 76%,
+        68% 88%,
+        50% 100%,
+        32% 88%,
+        20% 76%,
+        12% 62%,
+        10% 46%,
+        17% 30%,
+        27% 16%,
+        38% 6%
+      );
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.40), transparent 55%),
+        linear-gradient(135deg, rgba(255,122,168,.35), rgba(225,29,72,.22));
+      box-shadow:
+        0 18px 40px rgba(0,0,0,.10),
+        inset 0 0 0 1px rgba(255,255,255,.18);
+      opacity: 0.15; /* MUY suave para no arruinar la foto */
+      transition: opacity .18s ease, transform .18s ease, filter .18s ease;
+    }
+
+    .petal-hotspot:hover::before{
+      opacity: 0.30;
+      transform: translateY(-2px) scale(1.02);
+      filter: saturate(1.08);
+    }
+
+    .petal-hotspot:active::before{
+      opacity: 0.38;
+      transform: translateY(-1px) scale(1.00);
+    }
+
+    /* Hint */
+    .hint{
+      text-align:center;
+      padding: 8px 0 18px;
+      font-family:'Crimson Text', serif;
+      font-style: italic;
+      opacity:.82;
+    }
+
+    /* ===== MODAL ===== */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      justify-content:center;
+      align-items:center;
+      padding:18px;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(12px);
+      z-index: 5000;
+    }
+    .modal.active{ display:flex; }
+
+    .modal-card{
+      width: min(920px, 100%);
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(225,29,72,.22);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+      transform: translateY(16px) scale(.98);
+      opacity: 0;
+      animation: pop .45s ease forwards;
+      position:relative;
+    }
+    @keyframes pop{ to{ transform: translateY(0) scale(1); opacity:1; } }
+
+    .modal-close{
+      position:absolute;
+      top: 12px;
+      right: 12px;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(225,29,72,.20);
+      background: rgba(255,255,255,.9);
+      cursor:pointer;
+      font-size: 22px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.14);
+      transition: transform .2s ease;
+      z-index:10;
+    }
+    .modal-close:hover{ transform: rotate(90deg); }
+
+    .modal-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      min-height: 430px;
+    }
+
+    .modal-img{
+      position:relative;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,217,102,.25), transparent 45%),
+        radial-gradient(circle at 80% 25%, rgba(225,29,72,.18), transparent 60%),
+        linear-gradient(135deg, rgba(255,182,193,.24), rgba(225,29,72,.08));
+      overflow:hidden;
+    }
+    .modal-img img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.06);
+      animation: kenburns 8s ease-in-out infinite alternate;
+      filter: saturate(1.08) contrast(1.02);
+    }
+    @keyframes kenburns{
+      from{ transform: scale(1.06) translate(-1.5%, -1.5%); }
+      to{   transform: scale(1.14) translate(1.5%, 1.5%); }
+    }
+
+    .modal-content{
+      padding: 26px 22px 22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap: 10px;
+      position:relative;
+    }
+    .modal-content::before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,217,102,.16), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(255,122,168,.14), transparent 50%);
+      opacity:.9;
+    }
+    .modal-content > *{ position:relative; z-index:1; }
+
+    .modal-title{
+      font-family:'Dancing Script', cursive;
+      font-size: 2.35rem;
+      color: var(--red);
+      line-height:1;
+    }
+    .modal-text{
+      font-family:'Crimson Text', serif;
+      font-size: 1.16rem;
+      line-height: 1.75;
+      opacity:.92;
+    }
+    .modal-tag{
+      display:inline-flex;
+      align-self:flex-start;
+      gap:8px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(225,29,72,.18);
+      background: rgba(255,255,255,.65);
+      font-family:'Crimson Text', serif;
+      font-style: italic;
+      box-shadow: 0 12px 28px rgba(0,0,0,.10);
+      margin-top: 6px;
+    }
+    .modal-tag .mini{
+      width:10px; height:10px; border-radius:50%;
+      background: linear-gradient(135deg, var(--red), var(--pink));
+    }
+
+    /* corazoncitos */
+    .hearts{ position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:5; }
+    .heart{
+      position:absolute;
+      font-size: 18px;
+      opacity:0;
+      animation: rise 1.6s ease forwards;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.16));
+    }
+    @keyframes rise{
+      0%{ transform: translateY(20px) scale(.8); opacity:0; }
+      15%{ opacity:1; }
+      100%{ transform: translateY(-120px) scale(1.15); opacity:0; }
+    }
+
+    @media (max-width: 860px){
+      .modal-grid{ grid-template-columns: 1fr; }
+      .modal-img{ height: 320px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .spark, .heart, .modal-card, .modal-img img{ animation: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <header>
+      <h1 class="title">De mi para ti</h1>
+      <p class="subtitle">Puedes darle clic en algunos petalos :)</p>
+    </header>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>¿Lo Recuerdas?</h2>
+          <p>
+            Honestamente quería hacer esto más real y enviártelo hasta tu casa, pero las cosas se me complicaron bastante. 
+            Sin embargo, la intención sigue siendo la misma.
+            A la próxima lo haré como se debe… te lo prometo.
+          </p>
+        </div>
+      </div>
+
+      <div class="bouquet-stage">
+        <div class="bouquet-card" id="bouquetCard">
+          <!-- TU FOTO REAL AQUÍ -->
+          <img class="bouquet-photo" src="ramo.jpg" alt="Ramo de rosas" />
+
+          <!-- Hotspots (5 pétalos clickeables) -->
+          <div class="hotspots">
+            <!-- PÉTALO 1 -->
+            <button class="petal-hotspot" data-index="0"
+              style="top:18%; left:30%; width:14%; height:18%;"
+              aria-label="Pétalo 1"></button>
+
+            <!-- PÉTALO 2 -->
+            <button class="petal-hotspot" data-index="1"
+              style="top:16%; left:46%; width:14%; height:20%;"
+              aria-label="Pétalo 2"></button>
+
+            <!-- PÉTALO 3 -->
+            <button class="petal-hotspot" data-index="2"
+              style="top:18%; left:62%; width:14%; height:18%;"
+              aria-label="Pétalo 3"></button>
+
+            <!-- PÉTALO 4 -->
+            <button class="petal-hotspot" data-index="3"
+              style="top:34%; left:22%; width:14%; height:18%;"
+              aria-label="Pétalo 4"></button>
+
+            <!-- PÉTALO 5 -->
+            <button class="petal-hotspot" data-index="4"
+              style="top:34%; left:68%; width:14%; height:18%;"
+              aria-label="Pétalo 5"></button>
+          </div>
+        </div>
+      </div>
+      <div class="hint">✨ Haz momentos mas divertidos y mas emocionantes lo se, pero estos son los que marcaron rasgos.</div>
+      <div class="hint">✨ Si te genera problemas esta publicacion, perdoname y lo borras.</div>
+    </section>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Detalle">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">×</button>
+
+    <div class="hearts" id="hearts"></div>
+
+    <div class="modal-grid">
+      <div class="modal-img">
+        <!-- ✅ Imagen -->
+        <img id="modalImg" alt="Imagen del detalle" style="display:none;" />
+
+        <!-- ✅ Video -->
+        <video id="modalVideo"
+               style="display:none;"
+               controls
+               playsinline
+               preload="metadata"></video>
+      </div>
+
+      <div class="modal-content">
+        <div class="modal-title" id="modalTitle">Título</div>
+        <div class="modal-text" id="modalText">Texto</div>
+
+        <div class="modal-tag">
+          <span class="mini"></span>
+          <span id="modalTag">Detalle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+  const petalsData = [
+    { title:"Las rodadas insanas", text:"De los primeros dias en que ya jugabamos y literalmente andabamos en esas 'motos' que servian para nada ", tag:"Petalo 1", type:"image", src:"https://media.discordapp.net/attachments/1472268338347638877/1472273497991545024/p1.jpg?ex=6991f90b&is=6990a78b&hm=018bd02598ea8c1592198928d779389bf63802357d88fea4bb5ba67fa4808340&=&format=webp&width=880&height=660" },
+    { title:"Las bailadas", text:"Si mi mente no fala esta fue la tercera vez que bailamos algo asi. De las otras 2 no tengo fotos :( (si tienes me las mandas por fa jaja)", tag:"Pétalo 2", type:"video", src:"petalos/v1.mov" },
+    { title:"Este es muy importante", text:"Fue una noche donde empece a conocerla como eres en realidad. Fue cuando me convenci que tu Amistad es de las mas importantes de mi vida y con la ayuda de Dios la conservare para siempre hasta donde pueda.", tag:"Pétalo 3", type:"image", src:"https://media.discordapp.net/attachments/1472268338347638877/1472273451984097351/p2.jpg?ex=6991f900&is=6990a780&hm=1e4bb0d3f31d5d1266e3fcc51f5d67ad5113b6ed8c4dab97536be0256503ff69&=&format=webp&width=513&height=385" },
+    { title:"Secuestro...", text:"¿Por que este? Por que fue la primera vez que hice anti rol con tal de salvarla, donde cada vez que me acuerdo me rio tanto ya que es mucha felicidad ese dia apesar de estar todo enojado ya que fue mega divertido rescatarla ", tag:"Pétalo 4", type:"image", src:"https://media.discordapp.net/attachments/1472268338347638877/1472273362888818899/p3.jpg?ex=6991f8eb&is=6990a76b&hm=d3ce6ac4422ab17c198495bc26e0a943a8c5d2c375484157e5bf0215f883e659&=&format=webp&width=536&height=953" },
+    { title:"El mejor", text:"No puedo describir este momento", tag:"Pétalo 5", type:"video", src:"https://cdn.discordapp.com/attachments/1472268338347638877/1472273254625443952/v3.mp4?ex=6991f8d1&is=6990a751&hm=4171ccac48ec3b7985fe6b31777699312c8d91a6a0ed9286ea063f8143820e99&" }
+  ];
+
+  const modal = document.getElementById("modal");
+  const modalImg = document.getElementById("modalImg");
+  const modalVideo = document.getElementById("modalVideo");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalText = document.getElementById("modalText");
+  const modalTag = document.getElementById("modalTag");
+  const modalClose = document.getElementById("modalClose");
+
+  function openModal(index){
+    const d = petalsData[index];
+
+    modalTitle.textContent = d.title;
+    modalText.textContent = d.text;
+    modalTag.textContent = d.tag;
+
+    // Reset
+    modalImg.style.display = "none";
+    modalVideo.style.display = "none";
+    modalVideo.pause();
+    modalVideo.removeAttribute("src");
+
+    if(d.type === "video"){
+      modalVideo.style.display = "block";
+      modalVideo.src = d.src;
+      modalVideo.load();
+    } else {
+      modalImg.style.display = "block";
+      modalImg.src = d.src;
+    }
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(){
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+    modalVideo.pause();
+    modalVideo.currentTime = 0;
+  }
+
+  document.querySelectorAll(".petal-hotspot").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      openModal(Number(btn.dataset.index));
+    });
+  });
+
+  modalClose.addEventListener("click", closeModal);
+</script>
+
+
+</body>
+</html>
